@@ -39,6 +39,16 @@ def needleman_wunsch_algo(sequence_1:str, sequence_2:str, gap_penalty:int, misma
     for j in range(0,m+1):
         scores[0,j] = gap_penalty * j
     
+    #Fill out other values in the scoring matrix
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            #Calculate the score by checking the values in the diagonal, top, and left cells
+            match = scores[i-1][j-1] + match_score(sequence_1[i-1],sequence_2[j-1],-1,1)
+            indel_s1 = scores[i-1][j] + gap_penalty #above
+            indel_s2 = scores[i][j-1] + gap_penalty #left
+            #Record the maximum score from the three possible scores above
+            scores[i][j] = max(match, indel_s1, indel_s2)
+    
     print(scores)
 
 
