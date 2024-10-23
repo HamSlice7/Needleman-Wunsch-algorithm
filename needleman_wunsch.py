@@ -50,6 +50,22 @@ def needleman_wunsch_algo(sequence_1:str, sequence_2:str, gap_penalty:int, misma
             scores[i][j] = max(match, indel_s1, indel_s2)
     
     print(scores)
+    print(scores[5][1])
+    #Create variables to store alignment
+    align1 = ""
+    align2 = ""
+
+    #Starting from the bottom right cell
+    i = n
+    j = m
 
 
-needleman_wunsch_algo('ATTACA', 'ATGCT',-1,-1,1)
+    #Backtracing through the scores matrix to find the optimal alignment
+    while i > 0 and j > 0:
+        current_score = scores[i][j]
+        diagonal_score = scores[i-1][j-1]
+        up_score = scores[i-1][j]
+        left_score = scores[i][j-1]
+
+
+needleman_wunsch_algo('ACTGA', 'ACAA',-1,-1,1)
