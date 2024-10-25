@@ -27,8 +27,8 @@ def needleman_wunsch_algo(sequence_1:str, sequence_2:str, gap_penalty:int, misma
     """
     
     #Getting the number of rows and column for the matrix
-    m = len(sequence_1)
-    n = len(sequence_2)
+    n = len(sequence_1)
+    m = len(sequence_2)
 
     #Generating a matrix to hold the scores
     scores = np.zeros((m+1,n+1))
@@ -41,18 +41,18 @@ def needleman_wunsch_algo(sequence_1:str, sequence_2:str, gap_penalty:int, misma
     for j in range(0, n+1):
         scores[0,j] = gap_penalty * j
     
+
     #Fill out other values in the scoring matrix
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             #Calculate the score by checking the values in the diagonal, top, and left cells
+            print(sequence_1[j-1], sequence_2[i-1])
             match = scores[i-1][j-1] + match_score(sequence_1[j-1],sequence_2[i-1],-1,-1,1)
             indel_s1 = scores[i-1][j] + gap_penalty #above
             indel_s2 = scores[i][j-1] + gap_penalty #left
             #Record the maximum score from the three possible scores above
             scores[i][j] = max(match, indel_s1, indel_s2)
     
-    print(scores)
-    print(scores[5][1])
     #Create variables to store alignment
     align1 = ""
     align2 = ""
@@ -66,8 +66,8 @@ def needleman_wunsch_algo(sequence_1:str, sequence_2:str, gap_penalty:int, misma
     while i > 0 and j > 0:
         current_score = scores[i][j]
         diagonal_score = scores[i-1][j-1]
-        up_score = scores[i-1][j]
-        left_score = scores[i][j-1]
+        up_score = scores[i][j-1]
+        left_score = scores[i-1][j]
 
         #Figure out which cell the current score was calculated from
         if current_score == diagonal_score + match_score(sequence_1[j-1],sequence_2[i-1],-1,-1,1):
